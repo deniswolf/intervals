@@ -2,19 +2,19 @@
 const expect = require('chai').expect;
 const getInterval = require('./../helpers').getInterval;
 
-const hasNOverlappingIntervals = require('../../intervals').overlapsNTimes;
+const createOverlapsCheckForNIntervals = require('../../intervals').createCheck;
 
 describe('Intervals overlap', function() {
   describe('with two intervals, limit of two overlapping intervals', function(){
-    const times = 2;
+    const elementsToOverlap = 2;
     const intervals = [
       getInterval(-10000, -5000),
       getInterval(0, 1000)
     ];
     describe('no overlap',()=>{
       it('returns false', ()=>{
-        const overlapsOnce = hasNOverlappingIntervals(times);
-        const result = overlapsOnce(intervals);
+        const overlapsCheck = createOverlapsCheckForNIntervals(elementsToOverlap);
+        const result = overlapsCheck(intervals);
         expect(result).to.be.false;
       });
     });
@@ -24,15 +24,15 @@ describe('Intervals overlap', function() {
         getInterval(-1000, 1000)
       ];
       it('returns true', function () {
-        const overlapsOnce = hasNOverlappingIntervals(times);
-        const result = overlapsOnce(intervals);
+        const overlapsCheck = createOverlapsCheckForNIntervals(elementsToOverlap);
+        const result = overlapsCheck(intervals);
         expect(result).to.be.true;
       });
     })
   });
 
   describe('with 5 intervals, limit of 3 overlapping intervals', function(){
-    const times = 3;
+    const elementsToOverlap = 3;
     describe('no overlaps at all',()=>{
       const intervals = [
         getInterval(0, 100),
@@ -42,8 +42,8 @@ describe('Intervals overlap', function() {
         getInterval(800, 900)
       ];
       it('returns false', ()=>{
-        const overlapsOnce = hasNOverlappingIntervals(times);
-        const result = overlapsOnce(intervals);
+        const overlapsCheck = createOverlapsCheckForNIntervals(elementsToOverlap);
+        const result = overlapsCheck(intervals);
         expect(result).to.be.false;
       });
     });
@@ -56,8 +56,8 @@ describe('Intervals overlap', function() {
         getInterval(400, 500)
       ];
       it('returns false', ()=>{
-        const overlapsOnce = hasNOverlappingIntervals(times);
-        const result = overlapsOnce(intervals);
+        const overlapsCheck = createOverlapsCheckForNIntervals(elementsToOverlap);
+        const result = overlapsCheck(intervals);
         expect(result).to.be.false;
       });
     });
@@ -70,8 +70,8 @@ describe('Intervals overlap', function() {
         getInterval(800, 900)
       ];
       it('returns false', ()=>{
-        const overlapsOnce = hasNOverlappingIntervals(times);
-        const result = overlapsOnce(intervals);
+        const overlapsCheck = createOverlapsCheckForNIntervals(elementsToOverlap);
+        const result = overlapsCheck(intervals);
         expect(result).to.be.false;
       });
     });
@@ -84,8 +84,8 @@ describe('Intervals overlap', function() {
         getInterval(800, 900)
       ];
       it('returns true', ()=>{
-        const overlapsOnce = hasNOverlappingIntervals(times);
-        const result = overlapsOnce(intervals);
+        const overlapsCheck = createOverlapsCheckForNIntervals(elementsToOverlap);
+        const result = overlapsCheck(intervals);
         expect(result).to.be.true;
       });
     });
@@ -98,8 +98,8 @@ describe('Intervals overlap', function() {
         getInterval(0, 100)
       ];
       it('returns true', function () {
-        const overlapsOnce = hasNOverlappingIntervals(times);
-        const result = overlapsOnce(intervals);
+        const overlapsCheck = createOverlapsCheckForNIntervals(elementsToOverlap);
+        const result = overlapsCheck(intervals);
         expect(result).to.be.true;
       });
     });
@@ -113,15 +113,15 @@ describe('Intervals overlap', function() {
         getInterval(0, 100)
       ];
       it('returns true', function () {
-        const overlapsOnce = hasNOverlappingIntervals(times);
-        const result = overlapsOnce(intervals);
+        const overlapsCheck = createOverlapsCheckForNIntervals(elementsToOverlap);
+        const result = overlapsCheck(intervals);
         expect(result).to.be.true;
       });
     })
   });
 
   describe('with ten intervals, limit of 4 matches', ()=>{
-    const times = 4;
+    const elementsToOverlap = 4;
     describe('no overlaps at all',()=>{
       const intervals = [
         getInterval(0, 100),
@@ -136,8 +136,8 @@ describe('Intervals overlap', function() {
         getInterval(1700, 1800)
       ];
       it('returns false', function () {
-        const overlapsOnce = hasNOverlappingIntervals(times);
-        const result = overlapsOnce(intervals);
+        const overlapsCheck = createOverlapsCheckForNIntervals(elementsToOverlap);
+        const result = overlapsCheck(intervals);
         expect(result).to.be.false;
       });
     });
@@ -155,8 +155,8 @@ describe('Intervals overlap', function() {
         getInterval(1700, 1800)
       ];
       it('returns false', ()=>{
-        const overlapsOnce = hasNOverlappingIntervals(times);
-        const result = overlapsOnce(intervals);
+        const overlapsCheck = createOverlapsCheckForNIntervals(elementsToOverlap);
+        const result = overlapsCheck(intervals);
         expect(result).to.be.false;
       });
     });
@@ -176,8 +176,8 @@ describe('Intervals overlap', function() {
 
       ];
       it('returns true', ()=>{
-        const overlapsOnce = hasNOverlappingIntervals(times);
-        const result = overlapsOnce(intervals);
+        const overlapsCheck = createOverlapsCheckForNIntervals(elementsToOverlap);
+        const result = overlapsCheck(intervals);
         expect(result).to.be.true;
       });
     });
