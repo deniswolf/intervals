@@ -2,7 +2,7 @@
 const expect = require('chai').expect;
 const getInterval = require('./../helpers').getInterval;
 
-const createOverlapsCheckForNIntervals = require('../../intervals').createCheck;
+const createOverlapsCheckForNIntervals = require('../../intervals').createOverlapCheck;
 
 describe('Intervals overlap', function() {
   describe('with two intervals, limit of two overlapping intervals', function(){

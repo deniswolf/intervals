@@ -4,8 +4,6 @@ const doesOverlap = module.exports.doesOverlap = function doesOverlap(left, righ
   let early = {},
       later = {};
 
-  //TODO: add format validation
-
   if (left.s < right.s){
     early.s = left.s;
     early.e = left.e;
@@ -25,24 +23,23 @@ const doesOverlap = module.exports.doesOverlap = function doesOverlap(left, righ
   }
 };
 
-function getNumberOfOverlappingElements(arr, itemToCheck) {
+function getNumberOfOverlappingIntervals(arr, interval) {
   return arr
-    .map(function (currentItem) {
-      return doesOverlap(currentItem, itemToCheck);
+    .map(function (current) {
+      return doesOverlap(current, interval);
     })
     .filter((truthy)=>truthy)
     .length;
 }
 
-const overlapsNTimes = module.exports.overlapsNTimes = function overlapsNTimes(times){
+const createOverlapCheck = module.exports.createOverlapCheck = function createOverlapCheck(limit){
   return function(arr){
-    let overlapsPerElements = arr.map(function(currentItem){
-      // exclude overlapping with itself
-      return getNumberOfOverlappingElements(arr, currentItem);
+    let overlappedIntervals = arr.map(function(currentItem){
+      return getNumberOfOverlappingIntervals(arr, currentItem);
     });
 
-    let sufficientOverlaps = overlapsPerElements.filter(function(overlaps){
-      return overlaps >= times;
+    let sufficientOverlaps = overlappedIntervals.filter(function(overlaps){
+      return overlaps >= limit;
     });
 
     return sufficientOverlaps.length > 0;
