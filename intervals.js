@@ -4,8 +4,6 @@ const doesOverlap = module.exports.doesOverlap = function doesOverlap(left, righ
   let early = {},
       later = {};
 
-  //TODO: add format validation
-
   if (left.s < right.s){
     early.s = left.s;
     early.e = left.e;
@@ -48,15 +46,15 @@ const numberOfOverlaps = module.exports.numberOfOverlaps = function numberOfOver
   }
 };
 
-function getNumberOfOverlappingElementsFast(arr, itemToCheck, times) {
+function getNumberOfOverlappingIntervalsFast(arr, itemToCheck, limit) {
   var overlaps = 0;
-  for (let i=0; (i < arr.length) && (overlaps < times); i++){
+  for (let i=0; (i < arr.length) && (overlaps < limit); i++){
     overlaps += numberOfOverlaps(arr[i],itemToCheck);
   }
   return overlaps;
 }
 
-function getNumberOfOverlappingElements(arr, itemToCheck) {
+function getNumberOfOverlappingIntervals(arr, itemToCheck) {
   return arr
     .map(function (currentItem) {
       return doesOverlap(currentItem, itemToCheck);
@@ -65,21 +63,20 @@ function getNumberOfOverlappingElements(arr, itemToCheck) {
     .length;
 }
 
-const overlapsNTimesFast = module.exports.overlapsNTimesFast = function overlapsNTimesFast(times){
+const createOverlapFastCheck = module.exports.createOverlapFastCheck = function createOverlapFastCheck(limit){
   return function(arr){
     var overlaps = 0;
-    for (let i=0; i<(arr.length - 1) && (overlaps < times) ; i++){
-      overlaps = getNumberOfOverlappingElementsFast(arr,arr[i], times);
+    for (let i=0; i<(arr.length - 1) && (overlaps < limit) ; i++){
+      overlaps = getNumberOfOverlappingIntervalsFast(arr,arr[i], limit);
     }
-    return overlaps >= times;
+    return overlaps >= limit;
   }
 };
 
-const overlapsNTimes = module.exports.overlapsNTimes = function overlapsNTimes(times){
+const createOverlapCheck = module.exports.createOverlapCheck = function createOverlapCheck(times){
   return function(arr){
     let overlapsPerElements = arr.map(function(currentItem){
-      // exclude overlapping with itself
-      return getNumberOfOverlappingElements(arr, currentItem);
+      return getNumberOfOverlappingIntervals(arr, currentItem);
     });
 
     let sufficientOverlaps = overlapsPerElements.filter(function(overlaps){

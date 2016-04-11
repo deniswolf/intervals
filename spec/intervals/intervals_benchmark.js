@@ -2,8 +2,8 @@
 const Benchmark = require('benchmark');
 let suite = new Benchmark.Suite;
 const getInterval = require('./../helpers').getInterval;
-const overlapsNTimes = require('../../intervals').overlapsNTimes;
-const overlapsNTimesFast = require('../../intervals').overlapsNTimesFast;
+const createOverlapCheck = require('../../intervals').createOverlapCheck;
+const createOverlapFastCheck = require('../../intervals').createOverlapFastCheck;
 
 const intervals = [
   getInterval(0, 100),
@@ -19,8 +19,8 @@ const intervals = [
   getInterval(1250, 1400)
 ];
 
-const has4OverlappingElements = overlapsNTimes(4);
-const has4OverlappingElementsFast = overlapsNTimesFast(4);
+const has4OverlappingElements = createOverlapCheck(4);
+const has4OverlappingElementsFast = createOverlapFastCheck(4);
 
 
 suite.add('Non-optimized Overlap', function() {
