@@ -30,7 +30,7 @@ If you don't have node installed, please follow instructions here: [nvm](https:/
 
 ## Benchmarks
 
-benchmarks are relevant only for `feature/performance_improvements` branch as of now.
+benchmarks are relevant only for `feature/performance_improvements` branch as of now: [link](https://github.com/deniswolf/intervals/tree/feature/performance_improvements)
 
 `node spec/intervals/intervals_benchmark.js`
 
