@@ -1,8 +1,8 @@
 'use strict';
 const expect = require('chai').expect;
-const getInterval = require('./helpers').getInterval;
+const getInterval = require('./../helpers').getInterval;
 
-const doesOverlap = require('../intervals').doesOverlap;
+const doesOverlap = require('../../intervals').doesOverlap;
 
 describe('Overlap Function with two intervals', function() {
   describe('when the second stars after the first', function(){
