@@ -25,7 +25,7 @@ const doesOverlap = module.exports.doesOverlap = function doesOverlap(left, righ
   }
 };
 
-function getNumberOfOverlaps(arr, itemToCheck) {
+function getNumberOfOverlappingElements(arr, itemToCheck) {
   return arr
     .map(function (currentItem) {
       return doesOverlap(currentItem, itemToCheck);
@@ -38,7 +38,7 @@ const overlapsNTimes = module.exports.overlapsNTimes = function overlapsNTimes(t
   return function(arr){
     let overlapsPerElements = arr.map(function(currentItem){
       // exclude overlapping with itself
-      return getNumberOfOverlaps(arr, currentItem) - 1;
+      return getNumberOfOverlappingElements(arr, currentItem);
     });
 
     let sufficientOverlaps = overlapsPerElements.filter(function(overlaps){

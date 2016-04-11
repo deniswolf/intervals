@@ -5,8 +5,8 @@ const getInterval = require('./../helpers').getInterval;
 const overlapsNTimes = require('../../intervals').overlapsNTimes;
 
 describe('Intervals overlap', function() {
-  describe('with two intervals, limit of one match', function(){
-    const times = 1;
+  describe('with two intervals, limit of two overlapping elements', function(){
+    const times = 2;
     describe('no overlap',()=>{
       before(function(){
         this.intervals = [
@@ -20,7 +20,7 @@ describe('Intervals overlap', function() {
         expect(result).to.be.false;
       });
     });
-    describe('one overlap', function(){
+    describe('with overlap', function(){
       before(function(){
         this.intervals = [
           getInterval(-10000, 0),
@@ -33,5 +33,175 @@ describe('Intervals overlap', function() {
         expect(result).to.be.true;
       });
     })
+  });
+
+  describe('with 5 intervals, limit of 3 overlapping elements', function(){
+    const times = 3;
+    describe('no overlaps at all',()=>{
+      before(function(){
+        this.intervals = [
+          getInterval(0, 100),
+          getInterval(200, 300),
+          getInterval(400, 500),
+          getInterval(600, 700),
+          getInterval(800, 900)
+        ];
+      });
+      it('returns false', function () {
+        const overlapsOnce = overlapsNTimes(times);
+        const result = overlapsOnce(this.intervals);
+        expect(result).to.be.false;
+      });
+    });
+    describe('no overlaps at all, unsorted',()=>{
+      before(function(){
+        this.intervals = [
+          getInterval(0, 100),
+          getInterval(800, 900),
+          getInterval(200, 300),
+          getInterval(600, 700),
+          getInterval(400, 500)
+        ];
+      });
+      it('returns false', function () {
+        const overlapsOnce = overlapsNTimes(times);
+        const result = overlapsOnce(this.intervals);
+        expect(result).to.be.false;
+      });
+    });
+    describe('with two overlaps', function(){
+      before(function(){
+        this.intervals = [
+          getInterval(0, 100),
+          getInterval(200, 300),
+          getInterval(400, 500),
+          getInterval(210, 230),
+          getInterval(800, 900)
+        ];
+      });
+      it('returns false', function () {
+        const overlapsOnce = overlapsNTimes(times);
+        const result = overlapsOnce(this.intervals);
+        expect(result).to.be.false;
+      });
+    });
+    describe('with three overlaps', function(){
+      before(function(){
+        this.intervals = [
+          getInterval(0, 100),
+          getInterval(200, 300),
+          getInterval(220, 400),
+          getInterval(210, 230),
+          getInterval(800, 900)
+        ];
+      });
+      it('returns true', function () {
+        const overlapsOnce = overlapsNTimes(times);
+        const result = overlapsOnce(this.intervals);
+        expect(result).to.be.true;
+      });
+    });
+    describe('with three overlaps, unsorted', function(){
+      before(function(){
+        this.intervals = [
+          getInterval(210, 230),
+          getInterval(200, 300),
+          getInterval(800, 900),
+          getInterval(220, 400),
+          getInterval(0, 100)
+        ];
+      });
+      it('returns true', function () {
+        const overlapsOnce = overlapsNTimes(times);
+        const result = overlapsOnce(this.intervals);
+        expect(result).to.be.true;
+      });
+    });
+
+    describe('with three overlaps, two identical', function(){
+      before(function(){
+        this.intervals = [
+          getInterval(210, 230),
+          getInterval(200, 300),
+          getInterval(800, 900),
+          getInterval(200, 300),
+          getInterval(0, 100)
+        ];
+      });
+      it('returns true', function () {
+        const overlapsOnce = overlapsNTimes(times);
+        const result = overlapsOnce(this.intervals);
+        expect(result).to.be.true;
+      });
+    })
+  });
+
+  describe('with ten intervals, limit of 4 matches', function(){
+    const times = 4;
+    describe('no overlaps at all',()=>{
+      before(function(){
+        this.intervals = [
+          getInterval(0, 100),
+          getInterval(200, 300),
+          getInterval(400, 500),
+          getInterval(600, 700),
+          getInterval(800, 900),
+          getInterval(1000, 1100),
+          getInterval(1200, 1300),
+          getInterval(1400, 1500),
+          getInterval(1500, 1600),
+          getInterval(1700, 1800)
+        ];
+      });
+      it('returns false', function () {
+        const overlapsOnce = overlapsNTimes(times);
+        const result = overlapsOnce(this.intervals);
+        expect(result).to.be.false;
+      });
+    });
+    describe('with three overlaps', function(){
+      before(function(){
+        this.intervals = [
+          getInterval(0, 100),
+          getInterval(200, 300),
+          getInterval(400, 500),
+          getInterval(1050, 1080),
+          getInterval(800, 900),
+          getInterval(1000, 1100),
+          getInterval(1200, 1300),
+          getInterval(1020, 1030),
+          getInterval(1500, 1600),
+          getInterval(1700, 1800)
+        ];
+      });
+      it('returns false', function () {
+        const overlapsOnce = overlapsNTimes(times);
+        const result = overlapsOnce(this.intervals);
+        expect(result).to.be.false;
+      });
+    });
+    describe('with 4 overlapping elements', function(){
+      before(function(){
+        this.intervals = [
+          getInterval(0, 100),
+          getInterval(200, 300),
+          getInterval(400, 500),
+          getInterval(300, 700),
+          getInterval(800, 900),
+          getInterval(850, 950),
+
+          getInterval(1000, 1100),
+          getInterval(1080, 1200),
+          getInterval(1040, 1300),
+          getInterval(1250, 1400)
+
+        ];
+      });
+      it('returns true', function () {
+        const overlapsOnce = overlapsNTimes(times);
+        const result = overlapsOnce(this.intervals);
+        expect(result).to.be.true;
+      });
+    });
   });
 });
