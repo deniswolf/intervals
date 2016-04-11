@@ -9,6 +9,7 @@
   "author": "Denis Wolf",
   "license": "MIT",
   "dependencies": {
+    "benchmark": "^2.1.0",
     "chai": "^3.5.0",
     "mocha": "^2.4.5"
   }

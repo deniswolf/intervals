@@ -48,7 +48,7 @@ const numberOfOverlaps = module.exports.numberOfOverlaps = function numberOfOver
   }
 };
 
-function getNumberOfOverlappingElements(arr, itemToCheck, times) {
+function getNumberOfOverlappingElementsFast(arr, itemToCheck, times) {
   var overlaps = 0;
   for (let i=0; (i < arr.length) && (overlaps < times); i++){
     overlaps += numberOfOverlaps(arr[i],itemToCheck);
@@ -56,12 +56,36 @@ function getNumberOfOverlappingElements(arr, itemToCheck, times) {
   return overlaps;
 }
 
-const overlapsNTimes = module.exports.overlapsNTimes = function overlapsNTimes(times){
+function getNumberOfOverlappingElements(arr, itemToCheck) {
+  return arr
+    .map(function (currentItem) {
+      return doesOverlap(currentItem, itemToCheck);
+    })
+    .filter((truthy)=>truthy)
+    .length;
+}
+
+const overlapsNTimesFast = module.exports.overlapsNTimesFast = function overlapsNTimesFast(times){
   return function(arr){
     var overlaps = 0;
     for (let i=0; i<(arr.length - 1) && (overlaps < times) ; i++){
-      overlaps = getNumberOfOverlappingElements(arr,arr[i], times);
+      overlaps = getNumberOfOverlappingElementsFast(arr,arr[i], times);
     }
     return overlaps >= times;
+  }
+};
+
+const overlapsNTimes = module.exports.overlapsNTimes = function overlapsNTimes(times){
+  return function(arr){
+    let overlapsPerElements = arr.map(function(currentItem){
+      // exclude overlapping with itself
+      return getNumberOfOverlappingElements(arr, currentItem);
+    });
+
+    let sufficientOverlaps = overlapsPerElements.filter(function(overlaps){
+      return overlaps >= times;
+    });
+
+    return sufficientOverlaps.length > 0;
   }
 };
