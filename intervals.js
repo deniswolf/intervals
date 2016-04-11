@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports.doesOverlap = function(left, right){
+const doesOverlap = module.exports.doesOverlap = function doesOverlap(left, right){
   let early = {},
       later = {};
 
@@ -23,5 +23,28 @@ module.exports.doesOverlap = function(left, right){
   } else {
     return true;
   }
+};
 
+function getNumberOfOverlaps(arr, itemToCheck) {
+  return arr
+    .map(function (currentItem) {
+      return doesOverlap(currentItem, itemToCheck);
+    })
+    .filter((truthy)=>truthy)
+    .length;
+}
+
+const overlapsNTimes = module.exports.overlapsNTimes = function overlapsNTimes(times){
+  return function(arr){
+    let overlapsPerElements = arr.map(function(currentItem){
+      // exclude overlapping with itself
+      return getNumberOfOverlaps(arr, currentItem) - 1;
+    });
+
+    let sufficientOverlaps = overlapsPerElements.filter(function(overlaps){
+      return overlaps >= times;
+    });
+
+    return sufficientOverlaps.length > 0;
+  }
 };
